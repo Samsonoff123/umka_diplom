@@ -9,5 +9,7 @@ router.get('/', ProductController.getAll)
 router.get('/:id', ProductController.getOne)
 router.get('/getMostViews', ProductController.getMostViews)
 router.delete('/:id', ProductController.remove)
+router.post('/order', ProductController.createOrder)
+router.get('/order', ProductController.getOrder)
 
 module.exports = router

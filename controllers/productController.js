@@ -1,7 +1,7 @@
 const uuid = require('uuid')
 const path = require('path')
 const {
-    Product
+    Product, Order, User
 } = require('../models/models')
 const ApiError = require('../error/ApiError')
 const axios = require('axios')
@@ -156,6 +156,45 @@ class ProductController {
         }
     }
 
+    async createOrder(req, res, next) {
+        try {
+            const {
+                userId,
+                productIds,
+            } = req.body
+
+            const products = productIds.map(async(id) => {
+                await Product.findOne({
+                    where: {
+                        id
+                    },
+                }, )
+            })
+
+            const user = await User.findOne({
+                where: {
+                    id: userId
+                },
+            }, )
+
+            const order = await Order.create({
+                user,
+                products
+            })
+
+            return res.json(order)
+        } catch (e) {
+            console.log("error", e)
+            next(ApiError.badRequest(e))
+        }
+    }
+
+    async getOrder(req, res) {
+
+        let products = await Order.findAll()
+
+        return res.json(products)
+    }
 }
 
 module.exports = new ProductController()

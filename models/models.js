@@ -25,9 +25,16 @@ const Product = sq.define('product', {
     tag: {type: DataTypes.STRING, allowNull: true},
 })
 
+const Order = sq.define('order', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    products: Product,
+    user: User,
+})
+
 module.exports = {
     User,
     Product,
+    Order
 }
 
 
