@@ -1,7 +1,9 @@
 const uuid = require('uuid')
 const path = require('path')
 const {
-    Product, Order, User
+    Product,
+    Order,
+    User
 } = require('../models/models')
 const ApiError = require('../error/ApiError')
 const axios = require('axios')
@@ -86,15 +88,19 @@ class ProductController {
 
         const mostViewedProduct = devices.reduce((prev, current) => {
             return (prev.views > current.views) ? prev : current;
-          });
+        });
 
         return res.json(mostViewedProduct)
     }
 
     async setRating(req, res) {
         try {
-            const {id} = req.params
-            const {rating} = req.body
+            const {
+                id
+            } = req.params
+            const {
+                rating
+            } = req.body
             const token = req.headers.authorization.split(' ')[1];
             const userId = token;
 
@@ -104,17 +110,17 @@ class ProductController {
 
             if (!req.session.ratings[id]) {
                 req.session.ratings[id] = {
-                  userId: userId,
-                  rating: rating,
+                    userId: userId,
+                    rating: rating,
                 };
                 const device = await Product.findOne({
                     where: {
                         id
                     },
                 }, )
-    
+
                 const num = (device.rating + rating) / 2
-    
+
                 await Product.update({
                     rating: num.toFixed(2)
                 }, {
@@ -122,7 +128,7 @@ class ProductController {
                         id
                     },
                 }, )
-    
+
                 return res.json("Рейтинг успешно сохранен")
             }
             return res.json("Вы уже оценивали этот товар")
@@ -167,7 +173,7 @@ class ProductController {
 
             const products = []
 
-            productIds.filter(async(id) => {
+            productIds.filter(async (id) => {
                 prods.map(p => {
                     if (p.id === id) {
                         products.push(p)
@@ -195,10 +201,13 @@ class ProductController {
     }
 
     async getOrder(req, res) {
-
-        let products = await Order.findAll()
-
-        return res.json(products)
+        try {
+            const order = await Order.findAll()
+            return res.json(order)
+        } catch (e) {
+            console.log("error", e)
+            next(ApiError.badRequest(e))
+        }
     }
 }
 
