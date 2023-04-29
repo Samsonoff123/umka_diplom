@@ -27,17 +27,8 @@ const Product = sq.define('product', {
 
 const Order = sq.define('order', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    products: {type: DataTypes.ARRAY},
-    user: {
-        id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-        first_name: {type: DataTypes.STRING, unique: false,},
-        last_name: {type: DataTypes.STRING, unique: false,},
-        birthday: {type: DataTypes.STRING, unique: false,},
-        sex: {type: DataTypes.STRING, unique: false,},
-        email: {type: DataTypes.STRING, unique: true,},
-        password: {type: DataTypes.STRING},
-        role: {type: DataTypes.STRING, defaultValue: "USER"},
-    },
+    products: {type: DataTypes.ARRAY, allowNull: false},
+    user: {type: DataTypes.JSON, allowNull: false},
 })
 
 module.exports = {
