@@ -163,24 +163,29 @@ class ProductController {
                 productIds,
             } = req.body
 
-            const products = productIds.map(async(id) => {
-                await Product.findOne({
-                    where: {
-                        id
-                    },
-                }, )
+            const prods = await Product.findAll()
+
+            const products = []
+
+            productIds.filter(async(id) => {
+                prods.map(p => {
+                    if (p.id === id) {
+                        products.push(p)
+                    }
+                })
             })
 
             const user = await User.findOne({
                 where: {
                     id: userId
                 },
-            }, )
+            })
 
             const order = await Order.create({
                 user,
                 products
             })
+
 
             return res.json(order)
         } catch (e) {
