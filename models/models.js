@@ -27,7 +27,7 @@ const Product = sq.define('product', {
 
 const Order = sq.define('order', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    products: {type: DataTypes.ARRAY, allowNull: false},
+    products: {type: DataTypes.ARRAY(DataTypes.JSON), allowNull: false},
     user: {type: DataTypes.JSON, allowNull: false},
 })
 
