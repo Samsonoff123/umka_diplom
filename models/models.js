@@ -27,17 +27,7 @@ const Product = sq.define('product', {
 
 const Order = sq.define('order', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    products: {
-        id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-        name: {type: DataTypes.STRING, unique: false, allowNull: false},
-        description: {type: DataTypes.JSON, allowNull: true},
-        shortDescription: {type: DataTypes.JSON, allowNull: true},
-        price: {type: DataTypes.INTEGER, allowNull: false},
-        rating: {type: DataTypes.DOUBLE, defaultValue: 5.0},
-        views: {type: DataTypes.INTEGER, defaultValue: 0},
-        img: {type: DataTypes.STRING, allowNull: false},
-        tag: {type: DataTypes.STRING, allowNull: true},
-    },
+    products: {type: DataTypes.ARRAY},
     user: {
         id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
         first_name: {type: DataTypes.STRING, unique: false,},
