@@ -4,5 +4,6 @@ const ProductController = require('../controllers/productController')
 
 router.post('/', ProductController.createOrder)
 router.get('/', ProductController.getOrder)
+router.delete('/:orderId', ProductController.removeOrder)
 
 module.exports = router
