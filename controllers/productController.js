@@ -212,7 +212,7 @@ class ProductController {
 
     async removeOrder(req, res) {
         try {
-            const orderId = req.params.id
+            const { orderId } = req.params
 
             await Order.destroy({
                 where: {
@@ -223,9 +223,11 @@ class ProductController {
             const order = await Order.findAll()
 
             return res.json(order)
-        } catch (e) {
-            console.log("error", e)
-            next(ApiError.badRequest(e))
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({
+                message: 'Не удалось удалить заказ'
+            })
         }
     }
 }
